@@ -1,0 +1,182 @@
+좋아요, 이건 “책 프로필 스키마”를 한 번 잘 설계해두면 나중에 추천 로직 짜기도 정말 편해져요.
+LLM이 책 전문을 보고 추출할 수 있는 정보들을, “추천에 쓸만한지” 기준으로 나눠서 정리해볼게요.
+
+1. 기본 분류 정보
+
+추천의 가장 기본 축이 되는 것들입니다.
+
+is_fiction (소설/비소설 여부)
+
+fiction, non_fiction, mixed 정도로 구분
+
+소설만 보고 싶은 사람 / 에세이·교양서만 보고 싶은 사람을 잘 나누기 위해 필요
+
+primary_genres (주요 장르, 다중 선택 가능)
+
+예: ["판타지", "로맨스", "미스터리", "SF", "에세이", "자기계발", "인문", "경제경영"]
+
+LLM이 본문을 보고 상위 1~3개 정도로 정리
+
+subgenres (세부 장르)
+
+예: ["로맨스 판타지", "하드 SF", "심리 스릴러", "성장소설", "가족 드라마"]
+
+더 정교한 추천 (예: 로판만 좋아하는 유저) 에 유용
+
+main_topics / tags (주요 소재·주제 태그)
+
+예: ["성장", "우정", "복수", "전쟁", "직장생활", "창업", "연애", "가족", "우울", "삶의 의미"]
+
+장르가 같아도 “주제”가 다르면 완전히 다른 느낌이라 추천 품질에 크게 기여
+
+2. 길이·구조 정보
+
+“가볍게 읽을 책 vs 푹 잠길 책” 구분에 중요합니다.
+
+length_category (길이 카테고리)
+
+소설 기준: short_story, novella, novel, epic
+
+비소설: short_form, standard, long_form 등
+
+실제 단어 수/페이지 수는 파이프라인에서 계산하고, LLM은 카테고리만 판단해도 됨
+
+is_series (시리즈 여부)
+
+standalone, series_first, series_middle, series_last
+
+시리즈 중간권을 처음 추천하는 불상사를 줄일 수 있음
+
+structure_features (구조적 특징)
+
+예: ["짧은 에피소드 형식", "연속된 서사", "일기 형식", "편지 형식", "옴니버스"]
+
+“에피소드 형식을 좋아하는 사람” 같은 취향 반영 가능
+
+3. 문체·톤·난이도
+
+유저 “취향”과 직접적으로 연결되는 부분입니다.
+
+narrative_pov (시점)
+
+first_person, third_limited, third_omniscient, multi_pov, etc
+
+1인칭 시점을 특히 좋아/싫어하는 유저가 꽤 있어서 유용
+
+tense (시제)
+
+past, present, mixed
+
+크게 중요하지 않을 수 있지만, 선호가 갈리는 경우도 있음
+
+style_descriptors (문체 특징)
+예시 태그:
+
+["간결한", "묘사가 풍부한", "시적인", "직설적인", "유머러스한", "철학적인", "감정선이 섬세한", "대사가 많은", "설명이 많은"]
+→ LLM이 책을 보고 여러 개 태그로 달아주기
+
+tone_mood (전체 분위기·정서)
+
+예: ["어두운", "따뜻한", "희망적인", "우울한", "잔잔한", "긴장감 있는", "잔혹한", "로맨틱한", "우스운"]
+
+“힐링 계열만 보고 싶다”, “무거운 분위기 좋아한다” 같은 요구에 대응
+
+complexity_level (난이도)
+
+easy, normal, challenging, very_challenging
+
+문장 구조, 어휘 난이도, 철학·추상적 내용의 비중 등을 고려해 LLM이 평가
+
+독서 초보/학생/전문가별 필터에 유용
+
+4. 독자 경험 관련 정보
+
+“이 책을 읽으면 어떤 경험을 하게 될까?”를 요약하는 영역입니다.
+
+character_vs_plot_driven (캐릭터/플롯 중심)
+
+character_driven, plot_driven, balanced, idea_driven
+
+인물 심리 위주인지, 사건 전개 위주인지
+
+emotional_impact (감정 곡선/감정 태그)
+
+예: ["감동", "카타르시스", "슬픔", "몰입감", "위로", "여운", "공포"]
+
+특정 감정 경험을 원하는 유저에게 맞춰 추천 가능
+
+reading_energy (체력/집중력 요구도 느낌)
+
+light, moderate, heavy
+
+가볍게 읽을 수 있는지, 집중해서 읽어야 하는지
+
+target_audience (대상 독자층)
+
+children, YA, adult, all_age
+
+실제 내용·난이도를 기반으로, LLM이 추론
+
+5. 배경·세계관 정보 (특히 소설)
+
+장르가 같아도 “배경”이 다르면 선호가 달라집니다.
+
+world_type (세계관 타입)
+
+realistic_modern, historical, secondary_fantasy_world, sci_fi_setting, alternate_history 등
+
+time_period (시대 배경)
+
+contemporary, 19세기, 중세풍, 미래, 근현대, 불명/추상적 등
+
+primary_locales (주요 무대)
+
+예: ["도시", "시골", "학교", "회사", "우주선", "전장", "가정", "여행지"]
+
+“학교 배경 청춘물 좋아함” 같은 취향 필터에 활용
+
+6. 논픽션 전용 정보 (있다면)
+
+비소설·교양서를 추천할 때 유용한 필드입니다.
+
+nonfiction_type
+
+에세이, 자기계발, 역사, 과학, 심리학, 경제경영, 철학 …
+
+main_subjects (주요 학문/주제 분야)
+
+예: ["행동경제학", "인지심리학", "한국 현대사", "스타트업", "리더십"]
+
+practicality_level (실용성)
+
+highly_practical, mixed, theoretical
+
+실제 사례·가이드가 많은지, 이론 중심인지 구분
+
+depth_level (깊이)
+
+introductory, intermediate, advanced
+
+입문서 vs 전문서 필터링에 좋음
+
+7. 콘텐츠·주의/필터용 정보
+
+유저 보호, 피하고 싶은 요소 필터에 필수입니다.
+
+content_warnings (민감 요소 태그 + 강도)
+
+예:
+
+violence: none / mild / moderate / severe
+
+sexual_content: none / mild / moderate / explicit
+
+abuse, self_harm, drug_use, discrimination 등
+
+“폭력적 내용 싫어요” 같은 유저에게 필터로 사용
+
+age_rating_estimate (연령 등급 추정)
+
+all, 12+, 15+, 19+ 등
+
+법적 등급이 없을 때도 LLM이 내용 기반으로 추정
