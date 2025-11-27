@@ -1,61 +1,98 @@
+import os
 import requests
+from dotenv import load_dotenv
 
-def analyze_text_with_ollama(text):
-    url = "http://localhost:11434/api/generate"  # Ollama API 서버 URL
-    headers = {"Content-Type": "application/json"}
+load_dotenv()
+GMS_KEY = os.getenv("GMS_KEY")
 
-    payload = {
-        "model": "qwen2.5",  # 사용할 모델 이름
-        "prompt": f"""
-        너는 책의 일부를 분석해서 메타데이터를 추출하는 도우미야.
-        아래 텍스트를 읽고, 아래 JSON 형식으로 응답해줘.
+# -------------------------
+# 1. 텍스트 파일 읽기
+# -------------------------
+def load_text(path):
+    with open(path, "r", encoding="utf-8") as f:
+        return f.read()
 
-        텍스트:
-        \"\"\"{text}\"\"\"
 
-        JSON 응답:
-        {{
-          "local_genres": ["장르1", "장르2"],
-          "local_tone": ["톤1", "톤2"],
-          "local_style": ["문체1", "문체2"],
-          "local_topics": ["주제1", "주제2"],
-          "complexity_estimate": "난이도 예측값",
-          "highlight_candidate": {{
-            "reason": "하이라이트 이유",
-            "excerpt": "하이라이트된 텍스트",
-            "local_position_percent": 0.35
-          }}
-        }}
-        """
+# # -------------------------
+# # 2. 청크 나누기
+# # -------------------------
+# def split_into_chunks(text, chunk_size=2000, overlap=200):
+#     """
+#     chunk_size: 청크의 최대 길이
+#     overlap: 앞뒤 문맥을 유지하기 위해 겹치는 길이
+#     """
+#     chunks = []
+#     start = 0
+#     length = len(text)
+
+#     while start < length:
+#         end = min(start + chunk_size, length)
+#         chunk = text[start:end]
+#         chunks.append(chunk)
+#         start += (chunk_size - overlap)
+
+#     return chunks
+
+
+# -------------------------
+# 3. GPT API 호출 함수
+# -------------------------
+def summarize_chunk(chunk):
+    url = "https://gms.ssafy.io/gmsapi/api.openai.com/v1/chat/completions"
+
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {GMS_KEY}"
     }
 
-    # API 요청 보내기
-    response = requests.post(url, headers=headers, json=payload)
+    data = {
+        "model": "gpt-5-mini",
+        "messages": [
+            {"role": "developer", "content": "Answer in Korean"},
+            {
+                "role": "user",
+                "content": f"""
+다음 텍스트를 한국어로 간결히 요약해줘:
 
-    # 응답 텍스트 출력
-    print("Response Text:")
-    print(response.text)  # 응답 텍스트를 출력하여 확인
+\"\"\"{chunk}\"\"\"
+"""
+            }
+        ]
+    }
 
-    # 응답을 JSON으로 변환
-    try:
-        return response.json()
-    except requests.exceptions.JSONDecodeError as e:
-        print(f"Error decoding JSON: {e}")
+    res = requests.post(url, headers=headers, json=data)
+
+    if res.status_code != 200:
+        print("API Error:", res.status_code, res.text)
         return None
 
-# 예시로 사용할 책 텍스트 청크 (텍스트 파일에서 가져오는 방식)
-file_path = './toTag/sample.txt'  # 책의 텍스트 파일 경로
+    result = res.json()
+    return result["choices"][0]["message"]["content"]
 
-def read_text_from_file(file_path):
-    """
-    텍스트 파일을 읽어오는 함수
-    """
-    with open(file_path, 'r', encoding='utf-8') as file:
-        return file.read()
 
-# 책 텍스트를 읽어서 요약하기
-book_text = read_text_from_file(file_path)
-metadata = analyze_text_with_ollama(book_text)
+# -------------------------
+# 4. 전체 파이프라인 실행
+# -------------------------
+if __name__ == "__main__":
+    file_path = "./toTag/sample.txt"
+    text = load_text(file_path)
 
-if metadata:
-    print(metadata)
+    # chunks = split_into_chunks(text)
+    # print(f"총 청크 개수: {len(chunks)}")
+
+    # summaries = []
+
+    # for i, chunk in enumerate(chunks):
+    #     print(f"\n=== 청크 {i+1}/{len(chunks)} 요약 중... ===")
+    #     summary = summarize_chunk(chunk)
+    #     summaries.append(summary)
+    #     print(summary)
+
+    summary = summarize_chunk(text)
+    print(summary)
+
+    # 최종 파일 저장
+    with open("./toTag/summary_result.txt", "w", encoding="utf-8") as f:
+        f.write(f"{summary}")
+
+    print("\n요약 완료! summary_result.txt 파일을 확인하세요.")
