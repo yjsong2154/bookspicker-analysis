@@ -1,6 +1,7 @@
 import os
 import requests
 from dotenv import load_dotenv
+import tiktoken   # 추가된 부분
 
 load_dotenv()
 GMS_KEY = os.getenv("GMS_KEY")
@@ -11,6 +12,17 @@ GMS_KEY = os.getenv("GMS_KEY")
 def load_text(path):
     with open(path, "r", encoding="utf-8") as f:
         return f.read()
+
+# -------------------------
+# 토큰 계산 함수
+# -------------------------
+def count_tokens(text: str, model: str = "gpt-4o-mini"):
+    """
+    cl100k_base 토크나이저로 토큰 수 추정
+    실제 GPT-5 계열과 약간 차이날 수는 있지만 근사치는 매우 정확함
+    """
+    enc = tiktoken.get_encoding("cl100k_base")
+    return len(enc.encode(text))
 
 
 # # -------------------------
@@ -46,7 +58,7 @@ def summarize_chunk(chunk):
     }
 
     data = {
-        "model": "gpt-5-mini",
+        "model": "gpt-5-nano",
         "messages": [
             {"role": "developer", "content": "Answer in Korean"},
             {
@@ -92,7 +104,7 @@ if __name__ == "__main__":
     print(summary)
 
     # 최종 파일 저장
-    with open("./toTag/summary_result.txt", "w", encoding="utf-8") as f:
+    with open("./toTag/summary_result02.txt", "w", encoding="utf-8") as f:
         f.write(f"{summary}")
 
-    print("\n요약 완료! summary_result.txt 파일을 확인하세요.")
+    print("\n요약 완료! summary_result02.txt 파일을 확인하세요.")

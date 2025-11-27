@@ -1,0 +1,74 @@
+{
+  "is_fiction": "non_fiction",
+  "primary_genres": [
+    "에세이",
+    "인문"
+  ],
+  "subgenres": [
+    "회고록",
+    "자서전적 에세이"
+  ],
+  "main_topics": [
+    "스탠리 큐브릭",
+    "아서 C. 클라크",
+    "2001: 스페이스 오디세이",
+    "영화 제작 과정",
+    "소설과 영화의 관계"
+  ],
+  "length_category": "long_form",
+  "is_series": "standalone",
+  "structure_features": [
+    "서문 형식",
+    "일기/메모 형식의 발췌",
+    "회고록 스타일",
+    "인용/주석 형태의 서술"
+  ],
+  "narrative_pov": "first_person",
+  "tense": "past",
+  "style_descriptors": [
+    "철학적인",
+    "감정선이 섬세한",
+    "설명이 많은"
+  ],
+  "tone_mood": [
+    "따뜻한",
+    "희망적인",
+    "잔잔한"
+  ],
+  "complexity_level": "normal",
+  "character_vs_plot_driven": "balanced",
+  "emotional_impact": [
+    "감동",
+    "여운",
+    "몰입감"
+  ],
+  "reading_energy": "moderate",
+  "target_audience": "adult",
+  "world_type": "historical",
+  "time_period": "modern_history",
+  "primary_locales": [
+    "도시",
+    "뉴욕",
+    "첼시 호텔",
+    "실론(스리랑카)"
+  ],
+  "nonfiction_type": "essay",
+  "main_subjects": [
+    "영화 제작 과정의 고찰",
+    "SF 영화의 역사",
+    "기술과 예술의 관계",
+    "영화와 문학의 상호작용",
+    "클라크와 큐브릭에 대한 회고"
+  ],
+  "practicality_level": "theoretical",
+  "depth_level": "advanced",
+  "content_warnings": {
+    "violence": "none",
+    "sexual_content": "none",
+    "abuse": "none",
+    "self_harm": "none",
+    "drug_use": "none",
+    "discrimination": "none"
+  },
+  "age_rating_estimate": "all"
+}
