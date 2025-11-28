@@ -1,0 +1,68 @@
+{
+  "is_fiction": "fiction",
+  "primary_genres": [
+    "인문"
+  ],
+  "subgenres": [
+    "심리 소설",
+    "1인칭 시점",
+    "현실주의"
+  ],
+  "main_topics": [
+    "삶의 의미",
+    "사회적 소외",
+    "가족",
+    "빈곤",
+    "연애"
+  ],
+  "length_category": "novel",
+  "is_series": "standalone",
+  "structure_features": [
+    "일인칭 내면 독백",
+    "연대기적 서사"
+  ],
+  "narrative_pov": "first_person",
+  "tense": "past",
+  "style_descriptors": [
+    "묘사적",
+    "감정선이 섬세한",
+    "내적 독백 중심"
+  ],
+  "tone_mood": [
+    "어두운",
+    "우울한",
+    "고독한"
+  ],
+  "complexity_level": "challenging",
+  "character_vs_plot_driven": "character_driven",
+  "emotional_impact": [
+    "슬픔",
+    "몰입감",
+    "공포",
+    "여운"
+  ],
+  "reading_energy": "heavy",
+  "target_audience": "adult",
+  "world_type": "realistic_modern",
+  "time_period": "modern_history",
+  "primary_locales": [
+    "도시",
+    "하숙집",
+    "다방/카페",
+    "전차",
+    "긴자"
+  ],
+  "nonfiction_type": "null",
+  "main_subjects": [],
+  "practicality_level": "null",
+  "depth_level": "advanced",
+  "content_warnings": {
+    "violence": "moderate",
+    "sexual_content": "moderate",
+    "abuse": "mild",
+    "self_harm": "moderate",
+    "drug_use": "moderate",
+    "discrimination": "moderate"
+  },
+  "age_rating_estimate": "19+"
+}

@@ -1,0 +1,75 @@
+{
+  "is_fiction": "mixed",
+  "primary_genres": [
+    "에세이",
+    "인문"
+  ],
+  "subgenres": [
+    "문학 비평",
+    "작품 해설",
+    "자살에 대한 논의"
+  ],
+  "main_topics": [
+    "삶의 의미",
+    "자살과 죽음",
+    "배신",
+    "가족 관계",
+    "문학 비평"
+  ],
+  "length_category": "long_form",
+  "is_series": "standalone",
+  "structure_features": [
+    "연속된 서사",
+    "부분적으로 구분된 비평 섹션",
+    "구성상 대화 중심의 긴 독백"
+  ],
+  "narrative_pov": "first_person",
+  "tense": "mixed",
+  "style_descriptors": [
+    "묘사적인",
+    "철학적인",
+    "감정선이 섬세한",
+    "대사가 많은"
+  ],
+  "tone_mood": [
+    "어두운",
+    "묵직한",
+    "사색적인",
+    "우울한",
+    "잔잔한"
+  ],
+  "complexity_level": "very_challenging",
+  "character_vs_plot_driven": "character_driven",
+  "emotional_impact": [
+    "감동",
+    "몰입감",
+    "여운",
+    "슬픔"
+  ],
+  "reading_energy": "heavy",
+  "target_audience": "adult",
+  "world_type": "historical",
+  "time_period": "unspecified",
+  "primary_locales": [
+    "예루살렘/고대 유대 사회",
+    "도쿄/현대 일본 사회",
+    "가정의 공간"
+  ],
+  "nonfiction_type": "essay",
+  "main_subjects": [
+    "문학 비평",
+    "자살 연구",
+    "일본문학/근대문학"
+  ],
+  "practicality_level": "theoretical",
+  "depth_level": "advanced",
+  "content_warnings": {
+    "violence": "moderate",
+    "sexual_content": "mild",
+    "abuse": "none",
+    "self_harm": "moderate",
+    "drug_use": "moderate",
+    "discrimination": "none"
+  },
+  "age_rating_estimate": "19+"
+}

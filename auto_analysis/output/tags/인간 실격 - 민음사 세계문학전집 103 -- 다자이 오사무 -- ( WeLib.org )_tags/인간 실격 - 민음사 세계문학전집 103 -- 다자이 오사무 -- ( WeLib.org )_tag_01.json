@@ -1,0 +1,69 @@
+{
+  "is_fiction": "fiction",
+  "primary_genres": [
+    "에세이",
+    "문학"
+  ],
+  "subgenres": [
+    "심리소설",
+    "성장소설"
+  ],
+  "main_topics": [
+    "성장",
+    "가족",
+    "학교 생활",
+    "자아 탐구",
+    "익살과 사회 비판"
+  ],
+  "length_category": "long_form",
+  "is_series": "standalone",
+  "structure_features": [
+    "일기 형식",
+    "연속된 서사",
+    "에피소드 형식"
+  ],
+  "narrative_pov": "first_person",
+  "tense": "past",
+  "style_descriptors": [
+    "묘사가 풍부한",
+    "철학적인",
+    "감정선이 섬세한"
+  ],
+  "tone_mood": [
+    "어두운",
+    "긴장감 있는",
+    "우울한",
+    "잔잔한"
+  ],
+  "complexity_level": "challenging",
+  "character_vs_plot_driven": "character_driven",
+  "emotional_impact": [
+    "감동",
+    "몰입감",
+    "여운",
+    "공포"
+  ],
+  "reading_energy": "heavy",
+  "target_audience": "adult",
+  "world_type": "realistic_modern",
+  "time_period": "contemporary",
+  "primary_locales": [
+    "도시",
+    "학교",
+    "가정",
+    "도쿄"
+  ],
+  "nonfiction_type": "null",
+  "main_subjects": [],
+  "practicality_level": "null",
+  "depth_level": "advanced",
+  "content_warnings": {
+    "violence": "moderate",
+    "sexual_content": "severe",
+    "abuse": "severe",
+    "self_harm": "none",
+    "drug_use": "mild",
+    "discrimination": "none"
+  },
+  "age_rating_estimate": "19+"
+}

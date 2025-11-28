@@ -1,0 +1,73 @@
+{
+  "is_fiction": "mixed",
+  "primary_genres": [
+    "에세이",
+    "인문"
+  ],
+  "subgenres": [
+    "종교 소설",
+    "실존주의 서사",
+    "심리 드라마"
+  ],
+  "main_topics": [
+    "자아 성찰",
+    "종교/신앙",
+    "배신과 사랑",
+    "권력과 권위",
+    "죽음과 구원"
+  ],
+  "length_category": "long_form",
+  "is_series": "standalone",
+  "structure_features": [
+    "일인칭 독백",
+    "다층 서사",
+    "회상",
+    "메타서술"
+  ],
+  "narrative_pov": "first_person",
+  "tense": "past",
+  "style_descriptors": [
+    "묘사가 풍부한",
+    "철학적인",
+    "감정선이 섬세한",
+    "대사가 많은"
+  ],
+  "tone_mood": [
+    "어두운",
+    "우울한",
+    "잔잔한",
+    "비극적"
+  ],
+  "complexity_level": "challenging",
+  "character_vs_plot_driven": "character_driven",
+  "emotional_impact": [
+    "감동",
+    "슬픔",
+    "몰입감",
+    "여운"
+  ],
+  "reading_energy": "heavy",
+  "target_audience": "adult",
+  "world_type": "historical",
+  "time_period": "unspecified",
+  "primary_locales": [
+    "마을",
+    "다방/주점",
+    "베다니/예루살렘의 성전",
+    "후나바시 시/도시",
+    "복숭아밭"
+  ],
+  "nonfiction_type": "null",
+  "main_subjects": [],
+  "practicality_level": "mixed",
+  "depth_level": "advanced",
+  "content_warnings": {
+    "violence": "moderate",
+    "sexual_content": "explicit",
+    "abuse": "moderate",
+    "self_harm": "none",
+    "drug_use": "mild",
+    "discrimination": "none"
+  },
+  "age_rating_estimate": "19+"
+}
