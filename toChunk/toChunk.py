@@ -45,8 +45,8 @@ def split_into_chunks(file_path, chunk_size=2000, overlap_size=100):
     return final_chunks
 
 # 예시 실행
-file_path = "./toChunk/sample.txt"
-chunks = split_into_chunks(file_path, chunk_size=2000, overlap_size=2)  # 청크 크기와 오버랩 크기 조정
+file_path = "./toChunk/인간 실격.txt"
+chunks = split_into_chunks(file_path, chunk_size=1600, overlap_size=2)  # 청크 크기와 오버랩 크기 조정
 print(f"분할된 청크 수: {len(chunks)}")
 
 # 청크 출력 예시 (확인용)
@@ -57,7 +57,7 @@ for i, chunk in enumerate(chunks):
 # 청크를 개별 파일로 저장하기
 def save_chunks_to_files(chunks, base_filename="chunk_"):
     for i, chunk in enumerate(chunks):
-        file_path = f"{base_filename}{i+1}.txt"
+        file_path = f"./toChunk/{base_filename}{i+1}.txt"
         with open(file_path, 'w', encoding='utf-8') as file:
             file.write(chunk)
 
