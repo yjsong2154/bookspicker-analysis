@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "C:\Users\SSAFY\Desktop\16\bookspicker-analysis\auto_analysis\pipeline.py", line 242, in <module>
+    main()
+  File "C:\Users\SSAFY\Desktop\16\bookspicker-analysis\auto_analysis\pipeline.py", line 53, in main
+    print(f"\U0001f4da Found {len(epub_files)} epub files. Starting processing...")
+UnicodeEncodeError: 'cp949' codec can't encode character '\U0001f4da' in position 0: illegal multibyte sequence
