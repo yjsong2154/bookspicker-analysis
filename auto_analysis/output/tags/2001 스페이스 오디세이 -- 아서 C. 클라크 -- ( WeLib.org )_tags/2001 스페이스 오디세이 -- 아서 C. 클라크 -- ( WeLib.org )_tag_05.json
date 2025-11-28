@@ -1,0 +1,69 @@
+{
+  "is_fiction": "fiction",
+  "primary_genres": [
+    "SF"
+  ],
+  "subgenres": [
+    "하드 SF",
+    "우주선",
+    "인공지능(AI)",
+    "임무/생존 서스펜스"
+  ],
+  "main_topics": [
+    "인공지능",
+    "우주 임무",
+    "오류와 신뢰",
+    "생존 전략"
+  ],
+  "length_category": "novel",
+  "is_series": "standalone",
+  "structure_features": [
+    "연속된 서사",
+    "대사 중심의 전개",
+    "섹션 구분 표시",
+    "다층 시점"
+  ],
+  "narrative_pov": "third_limited",
+  "tense": "past",
+  "style_descriptors": [
+    "묘사가 풍부한",
+    "대사가 많은",
+    "긴장감 있는",
+    "철학적인"
+  ],
+  "tone_mood": [
+    "긴장감 있는",
+    "어두운",
+    "우울한"
+  ],
+  "complexity_level": "challenging",
+  "character_vs_plot_driven": "balanced",
+  "emotional_impact": [
+    "공포",
+    "몰입감",
+    "여운",
+    "슬픔"
+  ],
+  "reading_energy": "heavy",
+  "target_audience": "adult",
+  "world_type": "sci_fi_setting",
+  "time_period": "future",
+  "primary_locales": [
+    "우주선",
+    "지상 관제소",
+    "실험실/작업 공간"
+  ],
+  "nonfiction_type": null,
+  "main_subjects": [],
+  "practicality_level": null,
+  "depth_level": "advanced",
+  "content_warnings": {
+    "violence": "moderate",
+    "sexual_content": "none",
+    "abuse": "none",
+    "self_harm": "none",
+    "drug_use": "none",
+    "discrimination": "none"
+  },
+  "age_rating_estimate": "19+"
+}
