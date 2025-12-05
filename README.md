@@ -58,3 +58,69 @@ The pipeline follows a robust data processing flow:
 
 ## 5. Conclusion
 Bookspicker Analysis 프로젝트는 LLM을 단순 챗봇이 아닌 **'데이터 분석 도구'**로 활용하여, 비정형 데이터의 가치를 극대화한 엔지니어링 사례입니다. 비용 효율적인 아키텍처 설계와 도메인 특화 스키마를 통해, 실제 상용 서비스 수준의 추천 알고리즘을 뒷받침하는 견고한 데이터 기반을 마련했습니다.
+
+---
+
+## 6. Getting Started (Walkthrough)
+
+이 프로젝트를 로컬 환경에서 실행하기 위한 단계별 가이드입니다.
+
+### 6.1. Prerequisites
+*   Python 3.9 이상
+*   GMS API Key (SSAFY 제공)
+
+### 6.2. Installation
+
+1.  **Repository Clone**
+    ```bash
+    git clone <repository-url>
+    cd bookspicker-analysis
+    ```
+
+2.  **Virtual Environment Setup (Optional but Recommended)**
+    ```bash
+    python -m venv venv
+    # Windows
+    venv\Scripts\activate
+    # Mac/Linux
+    source venv/bin/activate
+    ```
+
+3.  **Install Dependencies**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+### 6.3. Environment Configuration
+
+프로젝트 루트 경로(`c:\dev_folder\ssafy\bookspicker-analysis\`)에 `.env` 파일을 생성하고 API 키를 입력합니다.
+
+**File:** `.env`
+```env
+GMS_KEY=your_gms_api_key_here
+```
+
+### 6.4. Running the Server
+
+FastAPI 서버를 실행하여 API를 사용할 수 있습니다.
+
+```bash
+uvicorn app.main:app --reload
+```
+
+*   서버가 실행되면 `http://127.0.0.1:8000`에서 접근 가능합니다.
+*   **API 문서 (Swagger UI):** `http://127.0.0.1:8000/docs`
+
+### 6.5. Usage Example (API)
+
+**1. 책 분석 요청 (Upload EPUB)**
+*   `POST /analysis/analyze`
+*   EPUB 파일을 업로드하면 텍스트 변환 -> 청크 분할 -> AI 태깅 -> 벡터화 과정이 자동으로 수행됩니다.
+
+**2. 책 목록 조회**
+*   `GET /books/`
+*   저장된 책들의 메타데이터와 분석 결과를 조회합니다.
+
+**3. 추천 받기**
+*   `POST /recommendations/`
+*   사용자의 읽은 책 목록(ID)을 보내면 유사한 책을 추천받을 수 있습니다.
