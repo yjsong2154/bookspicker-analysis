@@ -65,6 +65,7 @@ def get_recommendations(
             "book_id": rec["book"].id,
             "title": rec["book"].title,
             "author": rec["book"].author,
+            "cover_image": rec["book"].cover_image,
             "score": rec["score"],
             "reasons": {"vector_similarity": rec["score"]}
         })

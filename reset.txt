@@ -2,3 +2,18 @@ pip install -r requirements.txt
 GMS_KEY=your_gms_api_key_here
 python reset_db.py
 uvicorn app.main:app --reload --port 8001
+
+admin 페이지 데이터 업로드 확인
+admin 페이지 작가, 장르 정보 api 연결
+바로보기, 찜하기 버튼 전부 연결
+댓글 작성 연결
+메인 페이지 추천 연결
+그래프 api 구상 - 테그 단어 풍선으로 하면 될듯?
+
+그리고 할거
+책 등록
+시연 영상 찍기
+
+버그
+검색 안되는데?
+찜 필드 오류 있음

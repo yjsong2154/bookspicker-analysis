@@ -38,7 +38,8 @@ def create_book(db: Session, book: schemas.BookCreate):
         description=book.description,
         published_year=book.published_year,
         tags=book.tags,
-        embedding=book.embedding
+        embedding=book.embedding,
+        cover_image=book.cover_image
     )
     db.add(db_book)
     db.commit()
@@ -86,3 +87,38 @@ def record_read_book(db: Session, user_id: int, book_id: int):
 
 def get_user_read_history(db: Session, user_id: int):
     return db.query(models.UserBook).filter(models.UserBook.user_id == user_id).all()
+
+# --- Comments ---
+def create_comment(db: Session, comment: schemas.CommentCreate, book_id: int):
+    db_comment = models.Comment(
+        content=comment.content,
+        user_id=comment.user_id,
+        book_id=book_id
+    )
+    db.add(db_comment)
+    db.commit()
+    db.refresh(db_comment)
+    return db_comment
+
+def get_comment(db: Session, comment_id: int):
+    return db.query(models.Comment).filter(models.Comment.id == comment_id).first()
+
+def get_comments_by_book(db: Session, book_id: int):
+    # Join user to ensure user data is available? SQLAlchemy relationship handles lazy load usually
+    # but for pydantic, we might need joinedload if using asyncio, but here it's sync.
+    return db.query(models.Comment).filter(models.Comment.book_id == book_id).order_by(models.Comment.created_at.desc()).all()
+
+def update_comment(db: Session, comment_id: int, content: str):
+    db_comment = get_comment(db, comment_id)
+    if db_comment:
+        db_comment.content = content
+        db.commit()
+        db.refresh(db_comment)
+    return db_comment
+
+def delete_comment(db: Session, comment_id: int):
+    db_comment = get_comment(db, comment_id)
+    if db_comment:
+        db.delete(db_comment)
+        db.commit()
+    return db_comment

@@ -18,6 +18,7 @@ class User(Base):
 
     # Relationship to books read
     read_books = relationship("UserBook", back_populates="user")
+    comments = relationship("Comment", back_populates="user")
 
 class Book(Base):
     __tablename__ = "books"
@@ -32,11 +33,13 @@ class Book(Base):
     # AI Analysis Data
     embedding = Column(JSON) # Vector
     tags = Column(JSON)      # Analysis Tags
+    cover_image = Column(String, nullable=True) # Public URL or Path
     
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     # Relationship
     read_by_users = relationship("UserBook", back_populates="book")
+    comments = relationship("Comment", back_populates="book")
 
 class UserBook(Base):
     """
@@ -51,3 +54,17 @@ class UserBook(Base):
 
     user = relationship("User", back_populates="read_books")
     book = relationship("Book", back_populates="read_by_users")
+
+class Comment(Base):
+    __tablename__ = "comments"
+
+    id = Column(Integer, primary_key=True, index=True)
+    content = Column(Text, nullable=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+
+    user_id = Column(Integer, ForeignKey("users.id"))
+    book_id = Column(Integer, ForeignKey("books.id"))
+
+    user = relationship("User", back_populates="comments")
+    book = relationship("Book", back_populates="comments")

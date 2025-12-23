@@ -10,6 +10,7 @@ class BookBase(BaseModel):
     description: Optional[str] = None
     published_year: Optional[int] = None
     tags: Optional[Dict[str, Any]] = None
+    cover_image: Optional[str] = None
 
 class BookCreate(BookBase):
     embedding: Optional[List[float]] = None
@@ -19,6 +20,7 @@ class Book(BookBase):
     created_at: datetime
     # embedding is usually large, so maybe exclude by default in list, but include if detail needed.
     # For now, let's keep it optional in response or separate.
+    comments: List["Comment"] = []
     
     class Config:
         from_attributes = True
@@ -75,6 +77,7 @@ class RecommendationItem(BaseModel):
     author: Optional[str]
     score: float
     reasons: Optional[Dict[str, Any]] = None
+    cover_image: Optional[str] = None
 
 class RecommendationResponse(BaseModel):
     user_id: int
@@ -88,6 +91,7 @@ class BookSimple(BaseModel):
     author: Optional[str] = None
     description: Optional[str] = None
     published_year: Optional[int] = None
+    cover_image: Optional[str] = None
     # No embedding, no tags
 
     class Config:
@@ -99,3 +103,29 @@ class RecommendationSection(BaseModel):
 
 class AdvancedRecommendationResponse(BaseModel):
     sections: List[RecommendationSection]
+
+# --- Comments ---
+class CommentBase(BaseModel):
+    content: str
+
+class CommentCreate(CommentBase):
+    user_id: int # or id_backend
+
+class CommentUpdate(BaseModel):
+    content: str
+    user_id: int # for verification
+
+class Comment(CommentBase):
+    id: int
+    user_id: int
+    book_id: int
+    created_at: datetime
+    updated_at: Optional[datetime] = None
+    user: Optional[UserBase] = None
+
+    class Config:
+        from_attributes = True
+
+
+# Resolve forward references
+Book.model_rebuild()

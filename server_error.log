@@ -1,0 +1,49 @@
+Traceback (most recent call last):
+  File "C:\dev_folder\python3.10\lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\dev_folder\python3.10\lib\site-packages\sqlalchemy\engine\default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such column: books.cover_image
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\dev_folder\ssafy\bookspicker-analysis\app\routers\books.py", line 114, in create_book_with_cover
+    return crud.create_book(db=db, book=book_create)
+  File "C:\dev_folder\ssafy\bookspicker-analysis\app\crud.py", line 30, in create_book
+    existing = get_book_by_isbn(db, book.isbn)
+  File "C:\dev_folder\ssafy\bookspicker-analysis\app\crud.py", line 10, in get_book_by_isbn
+    return db.query(models.Book).filter(models.Book.isbn == isbn).first()
+  File "C:\dev_folder\python3.10\lib\site-packages\sqlalchemy\orm\query.py", line 2759, in first
+    return self.limit(1)._iter().first()  # type: ignore
+  File "C:\dev_folder\python3.10\lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+  File "C:\dev_folder\python3.10\lib\site-packages\sqlalchemy\orm\session.py", line 2351, in execute
+    return self._execute_internal(
+  File "C:\dev_folder\python3.10\lib\site-packages\sqlalchemy\orm\session.py", line 2249, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+  File "C:\dev_folder\python3.10\lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+  File "C:\dev_folder\python3.10\lib\site-packages\sqlalchemy\engine\base.py", line 1419, in execute
+    return meth(
+  File "C:\dev_folder\python3.10\lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "C:\dev_folder\python3.10\lib\site-packages\sqlalchemy\engine\base.py", line 1641, in _execute_clauseelement
+    ret = self._execute_context(
+  File "C:\dev_folder\python3.10\lib\site-packages\sqlalchemy\engine\base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+  File "C:\dev_folder\python3.10\lib\site-packages\sqlalchemy\engine\base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\dev_folder\python3.10\lib\site-packages\sqlalchemy\engine\base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\dev_folder\python3.10\lib\site-packages\sqlalchemy\engine\base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\dev_folder\python3.10\lib\site-packages\sqlalchemy\engine\default.py", line 951, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: books.cover_image
+[SQL: SELECT books.id AS books_id, books.isbn AS books_isbn, books.title AS books_title, books.author AS books_author, books.description AS books_description, books.published_year AS books_published_year, books.embedding AS books_embedding, books.tags AS books_tags, books.cover_image AS books_cover_image, books.created_at AS books_created_at 
+FROM books 
+WHERE books.isbn = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('1234512321570', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
