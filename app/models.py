@@ -10,6 +10,7 @@ class User(Base):
     name = Column(String, nullable=False)
     email = Column(String, unique=True, index=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+    id_backend = Column(Integer, unique=True, index=True, nullable=True)
     
     # New fields for recommendation
     preference_embedding = Column(JSON)  # Average vector of read books

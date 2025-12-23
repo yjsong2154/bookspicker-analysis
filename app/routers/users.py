@@ -40,7 +40,7 @@ def record_user_book(
     if not db_book:
         raise HTTPException(status_code=404, detail="Book not found")
         
-    return crud.create_or_update_user_book(db=db, user_id=user_id, book_id=book_id, user_book=user_book)
+    return crud.record_read_book(db=db, user_id=user_id, book_id=book_id)
 
 @router.get("/{user_id}/books", response_model=schemas.UserBookList)
 def read_user_books(
@@ -48,5 +48,5 @@ def read_user_books(
     status: Optional[str] = None, 
     db: Session = Depends(get_db)
 ):
-    items = crud.get_user_books(db, user_id=user_id, status=status)
+    items = crud.get_user_read_history(db, user_id=user_id)
     return {"items": items}

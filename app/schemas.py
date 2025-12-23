@@ -33,10 +33,11 @@ class UserBase(BaseModel):
     email: Optional[str] = None
 
 class UserCreate(UserBase):
-    pass
+    id_backend: Optional[int] = None
 
 class User(UserBase):
     id: int
+    id_backend: Optional[int] = None
     created_at: datetime
     preference_embedding: Optional[List[float]] = None
     preferred_tags: Optional[Dict[str, int]] = None
@@ -57,6 +58,9 @@ class UserBook(BaseModel):
 
     class Config:
         from_attributes = True
+
+class UserBookList(BaseModel):
+    items: List[UserBook]
 
 # --- Recommendations ---
 class RecommendationItem(BaseModel):

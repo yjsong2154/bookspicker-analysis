@@ -42,11 +42,16 @@ def create_book(db: Session, book: schemas.BookCreate):
     return db_book
 
 # --- Users ---
+def get_user_by_email(db: Session, email: str):
+    return db.query(models.User).filter(models.User.email == email).first()
+
 def get_user(db: Session, user_id: int):
     return db.query(models.User).filter(models.User.id == user_id).first()
 
 def create_user(db: Session, user: schemas.UserCreate):
     db_user = models.User(name=user.name, email=user.email)
+    if user.id_backend is not None:
+        db_user.id_backend = user.id_backend
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
