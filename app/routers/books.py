@@ -54,6 +54,13 @@ async def upload_book(
     
     return crud.create_book(db=db, book=book_create)
 
+@router.post("/", response_model=schemas.Book)
+def create_book_manually(book: schemas.BookCreate, db: Session = Depends(get_db)):
+    """
+    Manually create a book with analysis data (tags, vectors).
+    """
+    return crud.create_book(db=db, book=book)
+
 @router.get("/{book_id}", response_model=schemas.Book)
 def read_book(book_id: int, db: Session = Depends(get_db)):
     db_book = crud.get_book(db, book_id=book_id)

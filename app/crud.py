@@ -15,6 +15,10 @@ def get_books(db: Session, skip: int = 0, limit: int = 20, q: Optional[str] = No
         query = query.filter(models.Book.title.contains(q) | models.Book.author.contains(q))
     return query.offset(skip).limit(limit).all()
 
+def get_all_books_with_embedding(db: Session):
+    # Fetch all books that have embeddings for recommendation candidates
+    return db.query(models.Book).filter(models.Book.embedding.isnot(None)).all()
+
 def get_books_count(db: Session, q: Optional[str] = None):
     query = db.query(models.Book)
     if q:
@@ -44,6 +48,9 @@ def create_book(db: Session, book: schemas.BookCreate):
 # --- Users ---
 def get_user_by_email(db: Session, email: str):
     return db.query(models.User).filter(models.User.email == email).first()
+
+def get_user_by_backend_id(db: Session, id_backend: int):
+    return db.query(models.User).filter(models.User.id_backend == id_backend).first()
 
 def get_user(db: Session, user_id: int):
     return db.query(models.User).filter(models.User.id == user_id).first()

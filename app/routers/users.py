@@ -42,6 +42,23 @@ def record_user_book(
         
     return crud.record_read_book(db=db, user_id=user_id, book_id=book_id)
 
+@router.post("/record-read", response_model=schemas.UserBook)
+def record_read_book_by_external_ids(
+    request: schemas.UserReadBookRequest,
+    db: Session = Depends(get_db)
+):
+    # Find User
+    db_user = crud.get_user_by_backend_id(db, request.id_backend)
+    if not db_user:
+        raise HTTPException(status_code=404, detail=f"User with backend id {request.id_backend} not found")
+        
+    # Find Book
+    db_book = crud.get_book_by_isbn(db, request.isbn)
+    if not db_book:
+        raise HTTPException(status_code=404, detail=f"Book with ISBN {request.isbn} not found")
+        
+    return crud.record_read_book(db=db, user_id=db_user.id, book_id=db_book.id)
+
 @router.get("/{user_id}/books", response_model=schemas.UserBookList)
 def read_user_books(
     user_id: int, 

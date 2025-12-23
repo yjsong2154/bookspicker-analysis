@@ -62,6 +62,11 @@ class UserBook(BaseModel):
 class UserBookList(BaseModel):
     items: List[UserBook]
 
+class UserReadBookRequest(BaseModel):
+    id_backend: int
+    isbn: str
+
+
 # --- Recommendations ---
 class RecommendationItem(BaseModel):
     book_id: int
@@ -74,3 +79,23 @@ class RecommendationItem(BaseModel):
 class RecommendationResponse(BaseModel):
     user_id: int
     items: List[RecommendationItem]
+
+# --- Advanced Recommendations ---
+class BookSimple(BaseModel):
+    id: int
+    isbn: str
+    title: str
+    author: Optional[str] = None
+    description: Optional[str] = None
+    published_year: Optional[int] = None
+    # No embedding, no tags
+
+    class Config:
+        from_attributes = True
+
+class RecommendationSection(BaseModel):
+    title: str
+    books: List[BookSimple]
+
+class AdvancedRecommendationResponse(BaseModel):
+    sections: List[RecommendationSection]
