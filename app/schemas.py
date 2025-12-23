@@ -4,6 +4,7 @@ from datetime import datetime
 
 # --- Books ---
 class BookBase(BaseModel):
+    isbn: str
     title: str
     author: Optional[str] = None
     description: Optional[str] = None
@@ -16,7 +17,8 @@ class BookCreate(BookBase):
 class Book(BookBase):
     id: int
     created_at: datetime
-    # embedding is usually not returned in list view, maybe in detail if needed
+    # embedding is usually large, so maybe exclude by default in list, but include if detail needed.
+    # For now, let's keep it optional in response or separate.
     
     class Config:
         from_attributes = True
@@ -36,34 +38,30 @@ class UserCreate(UserBase):
 class User(UserBase):
     id: int
     created_at: datetime
+    preference_embedding: Optional[List[float]] = None
+    preferred_tags: Optional[Dict[str, int]] = None
 
     class Config:
         from_attributes = True
 
-# --- UserBooks ---
-class UserBookBase(BaseModel):
-    status: str = "finished"
-    rating: Optional[int] = None
-    progress: Optional[float] = None
-
-class UserBookCreate(UserBookBase):
-    pass
-
-class UserBook(UserBookBase):
+# --- UserBooks (Read History) ---
+class UserBookCreate(BaseModel):
     user_id: int
     book_id: int
-    last_read_at: datetime
-    book: Optional[Book] = None # For including book info in user's list
+
+class UserBook(BaseModel):
+    user_id: int
+    book_id: int
+    read_at: datetime
+    book: Optional[Book] = None
 
     class Config:
         from_attributes = True
-
-class UserBookList(BaseModel):
-    items: List[UserBook]
 
 # --- Recommendations ---
 class RecommendationItem(BaseModel):
     book_id: int
+    isbn: str
     title: str
     author: Optional[str]
     score: float
@@ -71,5 +69,4 @@ class RecommendationItem(BaseModel):
 
 class RecommendationResponse(BaseModel):
     user_id: int
-    strategy: str
     items: List[RecommendationItem]

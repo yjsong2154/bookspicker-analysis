@@ -6,6 +6,9 @@ from typing import List, Optional
 def get_book(db: Session, book_id: int):
     return db.query(models.Book).filter(models.Book.id == book_id).first()
 
+def get_book_by_isbn(db: Session, isbn: str):
+    return db.query(models.Book).filter(models.Book.isbn == isbn).first()
+
 def get_books(db: Session, skip: int = 0, limit: int = 20, q: Optional[str] = None):
     query = db.query(models.Book)
     if q:
@@ -19,7 +22,20 @@ def get_books_count(db: Session, q: Optional[str] = None):
     return query.count()
 
 def create_book(db: Session, book: schemas.BookCreate):
-    db_book = models.Book(**book.dict())
+    # Check if ISBN exists
+    existing = get_book_by_isbn(db, book.isbn)
+    if existing:
+        return existing
+        
+    db_book = models.Book(
+        isbn=book.isbn,
+        title=book.title,
+        author=book.author,
+        description=book.description,
+        published_year=book.published_year,
+        tags=book.tags,
+        embedding=book.embedding
+    )
     db.add(db_book)
     db.commit()
     db.refresh(db_book)
@@ -29,9 +45,6 @@ def create_book(db: Session, book: schemas.BookCreate):
 def get_user(db: Session, user_id: int):
     return db.query(models.User).filter(models.User.id == user_id).first()
 
-def get_user_by_email(db: Session, email: str):
-    return db.query(models.User).filter(models.User.email == email).first()
-
 def create_user(db: Session, user: schemas.UserCreate):
     db_user = models.User(name=user.name, email=user.email)
     db.add(db_user)
@@ -39,27 +52,25 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.refresh(db_user)
     return db_user
 
-# --- UserBooks ---
-def get_user_book(db: Session, user_id: int, book_id: int):
-    return db.query(models.UserBook).filter(models.UserBook.user_id == user_id, models.UserBook.book_id == book_id).first()
+def update_user_preferences(db: Session, user_id: int, embedding: List[float], tags: dict):
+    user = get_user(db, user_id)
+    if user:
+        user.preference_embedding = embedding
+        user.preferred_tags = tags
+        db.commit()
+        db.refresh(user)
+    return user
 
-def get_user_books(db: Session, user_id: int, status: Optional[str] = None):
-    query = db.query(models.UserBook).filter(models.UserBook.user_id == user_id)
-    if status:
-        query = query.filter(models.UserBook.status == status)
-    return query.all()
+# --- UserBooks (Interaction) ---
+def record_read_book(db: Session, user_id: int, book_id: int):
+    # Check if already recorded
+    exists = db.query(models.UserBook).filter_by(user_id=user_id, book_id=book_id).first()
+    if not exists:
+        user_book = models.UserBook(user_id=user_id, book_id=book_id)
+        db.add(user_book)
+        db.commit()
+        return user_book
+    return exists
 
-def create_or_update_user_book(db: Session, user_id: int, book_id: int, user_book: schemas.UserBookCreate):
-    db_user_book = get_user_book(db, user_id, book_id)
-    if db_user_book:
-        # Update
-        for key, value in user_book.dict(exclude_unset=True).items():
-            setattr(db_user_book, key, value)
-    else:
-        # Create
-        db_user_book = models.UserBook(user_id=user_id, book_id=book_id, **user_book.dict())
-        db.add(db_user_book)
-    
-    db.commit()
-    db.refresh(db_user_book)
-    return db_user_book
+def get_user_read_history(db: Session, user_id: int):
+    return db.query(models.UserBook).filter(models.UserBook.user_id == user_id).all()

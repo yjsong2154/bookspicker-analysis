@@ -1,0 +1,4 @@
+pip install -r requirements.txt
+GMS_KEY=your_gms_api_key_here
+python reset_db.py
+uvicorn app.main:app --reload --port 8001

@@ -19,6 +19,7 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 @router.post("/upload", response_model=schemas.Book)
 async def upload_book(
+    isbn: str = Form(...),
     title: str = Form(...),
     author: Optional[str] = Form(None),
     file: UploadFile = File(...),
@@ -43,6 +44,7 @@ async def upload_book(
 
     # Create Book in DB
     book_create = schemas.BookCreate(
+        isbn=isbn,
         title=title,
         author=author,
         description=analysis_result.get("description"),

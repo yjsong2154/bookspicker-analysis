@@ -10,6 +10,8 @@ app = FastAPI(title="Book Recommendation Server")
 app.include_router(books.router)
 app.include_router(users.router)
 app.include_router(recommendations.router)
+from .routers import analysis
+app.include_router(analysis.router)
 
 @app.get("/")
 def read_root():
