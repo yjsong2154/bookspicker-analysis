@@ -123,10 +123,33 @@ def delete_comment(db: Session, comment_id: int):
         db.commit()
     return db_comment
 
+from collections import Counter
+import re
+
 def delete_read_history(db: Session, user_id: int, book_id: int):
     db_obj = db.query(models.UserBook).filter_by(user_id=user_id, book_id=book_id).first()
     if db_obj:
         db.delete(db_obj)
         db.commit()
     return True
+
+def get_user_wordcloud(db: Session, user_id: int):
+    user_books = db.query(models.UserBook).filter(models.UserBook.user_id == user_id).all()
+    
+    tag_counts = Counter()
+    for ub in user_books:
+        # Access relationship 'book'
+        if ub.book and ub.book.tags:
+            tags = []
+            if isinstance(ub.book.tags, list):
+                tags = ub.book.tags
+            elif isinstance(ub.book.tags, dict):
+                tags = list(ub.book.tags.keys())
+            
+            # Filter English tags (exclude if contains ANY English char)
+            for tag in tags:
+                if not re.search(r'[a-zA-Z]', tag):
+                    tag_counts[tag] += 1
+                
+    return [{"text": tag, "value": count} for tag, count in tag_counts.most_common(50)]
 

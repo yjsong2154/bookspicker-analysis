@@ -108,3 +108,14 @@ def delete_read_history_by_external_ids(
         
     crud.delete_read_history(db, db_user.id, db_book.id)
     return {"message": "deleted"}
+
+@router.get("/{id_backend}/wordcloud")
+def get_user_wordcloud(
+    id_backend: int,
+    db: Session = Depends(get_db)
+):
+    db_user = crud.get_user_by_backend_id(db, id_backend)
+    if not db_user:
+        raise HTTPException(status_code=404, detail="User not found")
+        
+    return crud.get_user_wordcloud(db, db_user.id)
