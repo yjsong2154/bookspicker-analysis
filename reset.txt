@@ -3,9 +3,10 @@ GMS_KEY=your_gms_api_key_here
 python reset_db.py
 uvicorn app.main:app --reload --port 8001
 
+유저만 삭제 python reset_users.py
+
 admin 페이지 장르 정보 api 연결
 바로보기, 찜하기 버튼 전부 연결
-메인 페이지 추천 연결
 그래프 api 구상 워드 클라우드로 하면 될듯?
 epub 읽기
 

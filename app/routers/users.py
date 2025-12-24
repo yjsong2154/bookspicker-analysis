@@ -67,3 +67,44 @@ def read_user_books(
 ):
     items = crud.get_user_read_history(db, user_id=user_id)
     return {"items": items}
+@router.post("/{id_backend}/books/isbn/{isbn}")
+def record_read_history_by_external_ids(
+    id_backend: int, 
+    isbn: str,
+    db: Session = Depends(get_db)
+):
+    # Find User
+    db_user = crud.get_user_by_backend_id(db, id_backend)
+    if not db_user:
+        # User requested 200 even if not found? 
+        # "if post but already ... or delete but not found ... 200"
+        # If user not found, we can't record. But maybe just return 200 with message "User skipped"?
+        # User said "already exists ... 200". Did not say "if user not found 200".
+        # I'll Assume standard 404 for missing user/book, but 200 for "relation already exists".
+        # BUT, "if put in library ... post ... if already 200".
+        # So I only silence "Already Exists" error.
+        raise HTTPException(status_code=404, detail="User not found")
+        
+    db_book = crud.get_book_by_isbn(db, isbn)
+    if not db_book:
+        raise HTTPException(status_code=404, detail="Book not found")
+        
+    crud.record_read_book(db, db_user.id, db_book.id)
+    return {"message": "recorded"}
+
+@router.delete("/{id_backend}/books/isbn/{isbn}")
+def delete_read_history_by_external_ids(
+    id_backend: int, 
+    isbn: str,
+    db: Session = Depends(get_db)
+):
+    db_user = crud.get_user_by_backend_id(db, id_backend)
+    if not db_user:
+        return {"message": "User not found, nothing to delete"} # Idempotent 200
+        
+    db_book = crud.get_book_by_isbn(db, isbn)
+    if not db_book:
+        return {"message": "Book not found, nothing to delete"} # Idempotent 200
+        
+    crud.delete_read_history(db, db_user.id, db_book.id)
+    return {"message": "deleted"}

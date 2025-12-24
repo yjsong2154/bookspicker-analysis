@@ -122,3 +122,11 @@ def delete_comment(db: Session, comment_id: int):
         db.delete(db_comment)
         db.commit()
     return db_comment
+
+def delete_read_history(db: Session, user_id: int, book_id: int):
+    db_obj = db.query(models.UserBook).filter_by(user_id=user_id, book_id=book_id).first()
+    if db_obj:
+        db.delete(db_obj)
+        db.commit()
+    return True
+
