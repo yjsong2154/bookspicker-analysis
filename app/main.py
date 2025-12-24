@@ -18,6 +18,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+import os
+from fastapi.staticfiles import StaticFiles
+
+# Mount storage directory
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+STORAGE_DIR = os.path.join(BASE_DIR, "storage")
+os.makedirs(STORAGE_DIR, exist_ok=True)
+app.mount("/storage", StaticFiles(directory=STORAGE_DIR), name="storage")
+
 app.include_router(books.router)
 app.include_router(users.router)
 app.include_router(recommendations.router)
