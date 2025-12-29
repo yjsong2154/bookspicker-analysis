@@ -9,3 +9,11 @@ __pycache__/
 
 # SQLite
 *.db
+
+# Storage
+storage/covers/*
+storage/**/*.jpg
+storage/**/*.jpeg
+storage/**/*.png
+storage/**/*.gif
+
